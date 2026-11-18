@@ -248,7 +248,10 @@ namespace MansionKit.EditorTools
         }
 
         // Wall layering measured from the reference scene's West wall. Room side is local -Z.
-        static void Wall(string name, Transform parent, Vector3 pos, float yaw, float length)
+        // gapMin/gapMax (local X) cut a floor-level opening of gapHeight through every layer below it.
+        // wallpaper=false builds only the room-side trim (for the far side of an existing wall).
+        public static Transform Wall(string name, Transform parent, Vector3 pos, float yaw, float length,
+            bool wallpaper = true, float gapMin = 0f, float gapMax = 0f, float gapHeight = 0f)
         {
             var t = new GameObject(name).transform;
             t.SetParent(parent, false);
@@ -257,21 +260,41 @@ namespace MansionKit.EditorTools
             var trim = MansionKitStyle.Mat("Wood", "Trim");
             var walnut = MansionKitStyle.Mat("Wood", "Walnut");
             float h = MansionKitStyle.CeilingHeight;
-            Box("Wallpaper", t, new Vector3(0, h / 2, 0), new Vector3(length, h, MansionKitStyle.WallThickness), MansionKitStyle.Mat("Surface", "PlumWallpaper"), true);
-            Box("Wainscot", t, new Vector3(0, 0.53f, -0.11f), new Vector3(length, 1.06f, 0.07f), walnut, false);
-            Box("Baseboard", t, new Vector3(0, 0.10f, -0.17f), new Vector3(length, 0.18f, 0.07f), trim, false);
-            Box("Chair rail", t, new Vector3(0, 1.07f, -0.17f), new Vector3(length, 0.10f, 0.08f), trim, false);
-            Box("Crown molding", t, new Vector3(0, h - 0.13f, -0.14f), new Vector3(length, 0.19f, 0.14f), trim, false);
-            Box("Crown molding bead", t, new Vector3(0, h - 0.24f, -0.18f), new Vector3(length, 0.03f, 0.04f), MansionKitStyle.Mat("Metal", "AgedBrass"), false);
+            bool hasGap = gapMax > gapMin;
+
+            void Strip(string n, float y, float height, float z, float depth, Material m, bool collider)
+            {
+                bool cut = hasGap && y - height / 2 < gapHeight;
+                float a = -length / 2, b = length / 2;
+                if (!cut) { Box(n, t, new Vector3(0, y, z), new Vector3(length, height, depth), m, collider); return; }
+                if (gapMin > a) Box(n, t, new Vector3((a + gapMin) / 2, y, z), new Vector3(gapMin - a, height, depth), m, collider);
+                if (b > gapMax) Box(n, t, new Vector3((gapMax + b) / 2, y, z), new Vector3(b - gapMax, height, depth), m, collider);
+            }
+
+            if (wallpaper)
+            {
+                Strip("Wallpaper", h / 2, h, 0, MansionKitStyle.WallThickness, MansionKitStyle.Mat("Surface", "PlumWallpaper"), true);
+                if (hasGap)
+                    Box("Wallpaper lintel", t, new Vector3((gapMin + gapMax) / 2, (gapHeight + h) / 2, 0),
+                        new Vector3(gapMax - gapMin, h - gapHeight, MansionKitStyle.WallThickness), MansionKitStyle.Mat("Surface", "PlumWallpaper"), true);
+            }
+            Strip("Wainscot", 0.53f, 1.06f, -0.11f, 0.07f, walnut, false);
+            Strip("Baseboard", 0.10f, 0.18f, -0.17f, 0.07f, trim, false);
+            Strip("Chair rail", 1.07f, 0.10f, -0.17f, 0.08f, trim, false);
+            Strip("Crown molding", h - 0.13f, 0.19f, -0.14f, 0.14f, trim, false);
+            Strip("Crown molding bead", h - 0.24f, 0.03f, -0.18f, 0.04f, MansionKitStyle.Mat("Metal", "AgedBrass"), false);
 
             int panels = Mathf.Max(1, Mathf.FloorToInt((length - 0.4f) / 1.66f));
             float pitch = (length - 0.4f) / panels;
             for (int i = 0; i < panels; i++)
             {
                 float x = -length / 2 + 0.2f + pitch * (i + 0.5f);
+                float half = pitch * 0.87f / 2;
+                if (hasGap && x + half > gapMin && x - half < gapMax) continue;
                 Box("Inset panel", t, new Vector3(x, 0.55f, -0.15f), new Vector3(pitch * 0.87f, 0.64f, 0.04f), trim, false);
                 Box("Inset field", t, new Vector3(x, 0.55f, -0.17f), new Vector3(pitch * 0.81f, 0.54f, 0.03f), walnut, false);
             }
+            return t;
         }
 
         static void BuildRig(float w, float d)
@@ -322,7 +345,7 @@ namespace MansionKit.EditorTools
             cam.tag = "MainCamera";
         }
 
-        static GameObject Box(string name, Transform parent, Vector3 pos, Vector3 size, Material mat, bool collider)
+        public static GameObject Box(string name, Transform parent, Vector3 pos, Vector3 size, Material mat, bool collider)
         {
             var go = GameObject.CreatePrimitive(PrimitiveType.Cube);
             go.name = name;
