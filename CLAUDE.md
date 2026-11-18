@@ -1,3 +1,5 @@
+@AGENTS.md
+
 # Project: Haunted Victorian Mansion (Unity 6000.5, URP)
 
 Every new scene must look like another room of `Assets/Scenes/HauntedVictorianMansion.unity`. **Read `STYLE_GUIDE.md` before you create or change a scene.**
