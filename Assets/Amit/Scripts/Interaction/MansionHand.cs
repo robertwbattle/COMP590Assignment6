@@ -15,7 +15,7 @@ namespace MansionGame
     {
         static readonly List<MansionHand> all = new List<MansionHand>();
 
-        /// <summary>Every enabled hand (used by WindowEscape for its reach check).</summary>
+        /// <summary>Every enabled hand (used by ArmSwingLocomotion to check nothing is held).</summary>
         public static IReadOnlyList<MansionHand> All => all;
 
         const int HistoryLength = 6;
