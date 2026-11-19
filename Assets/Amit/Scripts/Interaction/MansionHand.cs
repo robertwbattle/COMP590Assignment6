@@ -128,10 +128,18 @@ namespace MansionGame
         void LateUpdate()
         {
             RecordHistory();
-            Follow();
+            FollowCore(true);
         }
 
-        void Follow()
+        void Follow() => FollowCore(false);
+
+        // Pseudo-haptic weight state: the displayed object trails the real hand by this offset.
+        Grabbable weightTarget;
+        Vector3 weightOffset;
+        Vector3 lastDisplayed;
+        const float MaxWeightOffset = 0.12f;
+
+        void FollowCore(bool advance)
         {
             if (turning != null)
                 turning.UpdateTurn(transform);
@@ -155,6 +163,29 @@ namespace MansionGame
                 if (k >= 1f)
                     pulling = false;
             }
+            if (weightTarget != held)
+            {
+                weightTarget = held;
+                weightOffset = Vector3.zero;
+                lastDisplayed = held.transform.position;
+            }
+            if (!pulling && held.Heaviness > 0f)
+            {
+                // Heavier objects lag and sag behind the hand (perceivable tracking offset), advanced once per frame.
+                if (advance)
+                {
+                    float rate = Mathf.Lerp(25f, 5f, held.Heaviness);
+                    var sagged = targetPos + Vector3.down * (0.06f * held.Heaviness);
+                    var smoothed = Vector3.Lerp(lastDisplayed, sagged, 1f - Mathf.Exp(-rate * Time.deltaTime));
+                    weightOffset = Vector3.ClampMagnitude(smoothed - targetPos, MaxWeightOffset);
+                }
+                targetPos += weightOffset;
+            }
+            else
+            {
+                weightOffset = Vector3.zero;
+            }
+            lastDisplayed = targetPos;
             held.transform.SetPositionAndRotation(targetPos, targetRot);
         }
 

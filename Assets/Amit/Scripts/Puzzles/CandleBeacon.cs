@@ -21,6 +21,8 @@ namespace MansionGame
         private Color ghostEmission = new Color(0.45f, 1.6f, 1.45f, 1f);
         [SerializeField, Min(1f), Tooltip("Flame grows by up to this factor during a flicker.")]
         private float flareScale = 1.35f;
+        [SerializeField, Tooltip("Optional smoke wisp played once when the candle is put out.")]
+        private ParticleSystem snuffSmoke;
 
         static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
         static readonly int EmissionId = Shader.PropertyToID("_EmissionColor");
@@ -29,6 +31,7 @@ namespace MansionGame
         Color warmBase, warmEmission;
         Vector3 baseScale;
         float nextBurst, burstStart = -1f;
+        bool wasLit = true;
 
         void Awake()
         {
@@ -48,7 +51,14 @@ namespace MansionGame
 
         void Update()
         {
-            if (!flame.gameObject.activeInHierarchy) return;
+            bool lit = flame.gameObject.activeInHierarchy;
+            if (!lit)
+            {
+                if (wasLit && snuffSmoke != null) snuffSmoke.Play();
+                wasLit = false;
+                return;
+            }
+            wasLit = true;
             float now = Time.time;
             if (burstStart < 0f && now >= nextBurst) burstStart = now;
             if (burstStart < 0f) return;

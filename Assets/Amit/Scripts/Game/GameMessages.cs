@@ -10,6 +10,8 @@ namespace MansionGame
     public sealed class GameMessages : MonoBehaviour
     {
         const float Distance = 1.4f;
+        const float TitleHeight = 150f;
+        const float LineHeight = 44f;
         const float RecentreAngle = 25f;
         const float Fade = 0.4f;
 
@@ -17,6 +19,7 @@ namespace MansionGame
         static readonly Color Ivory = new Color(0.875f, 0.784f, 0.627f, 1f);
 
         Transform panel;
+        RectTransform panelRect;
         CanvasGroup group;
         Text titleText;
         Text bodyText;
@@ -60,6 +63,11 @@ namespace MansionGame
             if (titleText == null) return;
             titleText.text = title ?? "";
             bodyText.text = body ?? "";
+            // Grow the panel to fit the body (e.g. the leaderboard on the win screen).
+            int lines = 1;
+            foreach (char c in bodyText.text) if (c == '\n') lines++;
+            if (panelRect != null)
+                panelRect.sizeDelta = new Vector2(900f, TitleHeight + 20f + Mathf.Max(4, lines) * LineHeight);
             showing = true;
             hold = seconds > 0f ? seconds : float.PositiveInfinity;
         }
@@ -72,9 +80,14 @@ namespace MansionGame
             if (g == null) return;
             if (s == GameState.Won)
             {
-                string t = "Time: " + EscapeGame.FormatTime(g.Elapsed) + "  ·  Best: " + EscapeGame.FormatTime(g.BestTime);
+                string t = "Time: " + EscapeGame.FormatTime(g.Elapsed);
                 if (g.NewBest) t += "  ·  New record!";
-                Show("You escaped", t + "\n\nPull a trigger to play again.", 0f);
+                var board = new System.Text.StringBuilder("\n\nFastest escapes\n");
+                var top = g.TopTimes;
+                for (int i = 0; i < top.Count; i++)
+                    board.Append(i + 1).Append(".  ").Append(EscapeGame.FormatTime(top[i]))
+                         .Append(i == g.LastRank ? "   ← you" : "").Append('\n');
+                Show("You escaped", t + board + "\nPull a trigger to play again.", 0f);
             }
             else if (s == GameState.Lost)
             {
@@ -113,6 +126,8 @@ namespace MansionGame
             group.blocksRaycasts = false;
             group.alpha = 0f;
             var rt = go.GetComponent<RectTransform>();
+            panel = rt; // the Canvas swapped the Transform for a RectTransform; keep the live one
+            panelRect = rt;
             rt.sizeDelta = new Vector2(900f, 360f);
             rt.localScale = Vector3.one * 0.0012f;
 
@@ -125,8 +140,10 @@ namespace MansionGame
             img.raycastTarget = false;
 
             var font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-            titleText = MakeText("Title", rt, font, 58, FontStyle.Italic, new Vector4(0f, 0.55f, 1f, 1f));
-            bodyText = MakeText("Body", rt, font, 36, FontStyle.Normal, new Vector4(0f, 0f, 1f, 0.55f));
+            titleText = MakeText("Title", rt, font, 58, FontStyle.Italic, new Vector4(0f, 1f, 1f, 1f));
+            ((RectTransform)titleText.transform).offsetMin = new Vector2(30f, -TitleHeight);
+            bodyText = MakeText("Body", rt, font, 36, FontStyle.Normal, new Vector4(0f, 0f, 1f, 1f));
+            ((RectTransform)bodyText.transform).offsetMax = new Vector2(-30f, -TitleHeight);
             go.SetActive(true);
         }
 

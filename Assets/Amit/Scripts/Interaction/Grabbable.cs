@@ -19,6 +19,8 @@ namespace MansionGame
 
         [SerializeField, Tooltip("Identifier sockets and puzzles match against, e.g. \"Book_Red\" or \"MirrorPane\".")]
         private string id = "";
+        [SerializeField, Range(0f, 1f), Tooltip("Pseudo-haptic weight (Rietzler et al. 2018): heavier objects trail and sag behind the hand.")]
+        private float heaviness;
         [SerializeField, Tooltip("Whether a hand may pick this up. Puzzles toggle this at runtime.")]
         private bool canGrab = true;
         [SerializeField, Min(0f), Tooltip("Largest throw speed (m/s) applied on release.")]
@@ -38,6 +40,7 @@ namespace MansionGame
 
         public string Id { get => id; set => id = value; }
         public bool CanGrab { get => canGrab; set => canGrab = value; }
+        public float Heaviness => heaviness;
         public bool IsHeld => Holder != null;
         public Socket CurrentSocket { get; private set; }
         public MansionHand Holder { get; private set; }
