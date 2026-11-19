@@ -135,5 +135,5 @@ The rows below are copied from `CREDITS.md`. Self-made sounds are listed in the 
 
 ## Demo and reflection video
 
-Demo and reflection video: (link to be added)
+Demo and reflection video: https://drive.google.com/file/d/11yB62M3nGplfIJfFfFCc0XJRKAayoV1K/view?usp=sharing
 
