@@ -34,7 +34,7 @@ This works on macOS and Windows without a headset.
 
 - Left thumbstick: move.
 - Arm-swing walking: hold both grips with empty hands and swing your arms as if walking. You move the way you are looking, faster the harder you swing.
-- Right thumbstick: snap turn (30 degrees).
+- Right thumbstick: smooth turn (up to 90 degrees per second).
 - Point a controller and pull the trigger: put out the coffee-table candle.
 - Grip near an object: grab it.
 - Grip, or pull the trigger while the ray is on an object, from up to 2.25 m away: the object flies to your hand. Release to drop it, or place it in a slot.
@@ -77,7 +77,7 @@ This works on macOS and Windows without a headset.
 | Particle systems | Three: rising embers in the fireplace, a wisp of smoke when you snuff the Puzzle 1 candle, and dust drifting in the moonbeam. |
 | Three puzzles | See the walkthrough. They must be solved in order to escape, and `EscapeGame.PuzzlesSolved` counts them (shown as "seals n/3"). The puzzles use grabbing, placing objects in sockets, turning in steps, and a moonbeam that reflects off mirrors using raycasts. |
 | Game | Win (escape) and lose (candle timer). Also a top-5 fastest-escapes leaderboard on the win screen (saved on the device) and a pocket-watch readout on the left hand showing time left and seals broken. |
-| Movement | Three ways to move: room-scale walking (the body capsule follows the headset), thumbstick locomotion with snap turn, and arm-swing walking (after McCullough et al. 2015). A comfort vignette narrows the view only during artificial movement and snap turns (after Fernandes & Feiner 2016). |
+| Movement | Three ways to move: room-scale walking (the body capsule follows the headset), thumbstick locomotion with smooth turn, and arm-swing walking (after McCullough et al. 2015). A comfort vignette narrows the view only during artificial movement (after Fernandes & Feiner 2016). |
 | Senses beyond visuals | Spatial 3D sound: ambience, candle snuff, bookcase grind, book thuds, mirror clicks, lock and bars, heartbeat, whispers, and win and lose stings. Controller haptics: grab, snap, mirror clicks, wrong-order buzz, door-unlocking rumble, win/lose pulses, and heartbeat. Two pseudo-haptic weight illusions (see below). |
 
 
@@ -87,7 +87,7 @@ This works on macOS and Windows without a headset.
 |---|---|---|
 | **Pseudo-haptic weight with a control/display ratio.** The heavy cheval mirrors turn at 0.6 times your wrist's rotation (`controlDisplayRatio` on each mirror's `Turnable`), so they feel heavy to turn. | Puzzle 3 mirrors | Lécuyer, Coquillart, Kheddar, Richard & Coiffet. "Pseudo-Haptic Feedback: Can Isometric Input Devices Simulate Force Feedback?" IEEE VR 2000, pp. 83–90. doi:10.1109/VR.2000.840369 |
 | **Weight through perceivable tracking offsets.** Held objects trail and sag slightly behind your real hand in proportion to their weight (`heaviness` on `Grabbable`: books 0.25, mirror pane 0.6), so you instinctively lift heavier things higher. | Books, mirror pane | Rietzler, Geiselhart, Gugenheimer & Rukzio. "Breaking the Tracking: Enabling Weight Perception using Perceivable Tracking Offsets." CHI 2018. doi:10.1145/3173574.3173702 |
-| **Dynamic field-of-view restriction.** A soft-edged circular vignette closes in during thumbstick or arm-swing movement and snap turns, and opens when you stop, to reduce VR sickness. It can be turned off on the Escape Game object (`comfortEnabled`). | All artificial movement | Fernandes & Feiner. "Combating VR Sickness through Subtle Dynamic Field-of-View Modification." IEEE 3DUI 2016, pp. 201–210. doi:10.1109/3DUI.2016.7460053 |
+| **Dynamic field-of-view restriction.** A soft-edged circular vignette closes in during thumbstick or arm-swing movement, and opens when you stop, to reduce VR sickness. It can be turned off on the Escape Game object (`comfortEnabled`). | All artificial movement | Fernandes & Feiner. "Combating VR Sickness through Subtle Dynamic Field-of-View Modification." IEEE 3DUI 2016, pp. 201–210. doi:10.1109/3DUI.2016.7460053 |
 | **Arm-swing locomotion.** Swinging your arms walks you forward, which keeps the body involved without needing a large play space. | Movement | McCullough, Xu, Michelson, et al. "Myo Arm: Swinging to Explore a VE." ACM SAP 2015, pp. 107–113. doi:10.1145/2804408.2804416 |
 
 ## Project layout
