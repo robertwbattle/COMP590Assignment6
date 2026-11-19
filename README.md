@@ -136,4 +136,3 @@ The rows below are copied from `CREDITS.md`. Self-made sounds are listed in the 
 
 Demo and reflection video: (link to be added)
 
-An optional idea for the demo: a helper switches on a fan when the window opens, to suggest cold night air.
