@@ -52,6 +52,7 @@ This works on macOS and Windows without a headset.
 
 - Three loose books (red, slate-grey, green) are spread through both rooms.
 - Lean close to the haunted mirror above the fireplace. Three book shapes fade into the glass, showing the order: red, slate, green.
+- Stuck? About a minute after the hidden room opens (and right after a wrong order), the book shapes flash in the mirror so you can see them from across the room, and a hint message appears.
 - Shelve the books in that order in the three slots of the cabinet in the hidden room. (The cabinet is against the far wall of the hidden room.)
 - A wrong order rattles a lock and buzzes the controllers. The right order opens the cabinet doors and shows a loose mirror pane. A message points out that one of the parlour's standing mirrors is missing its glass.
 
