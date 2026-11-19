@@ -82,6 +82,8 @@ Values are copied from `Assets/MansionKit/Materials`. *Uses* is how many rendere
 | `M_FX_HauntedMirror` | glass `#527470` | n/a | 1 | the `Mansion/Haunted Mirror` shader, with a procedural ghost |
 | `M_FX_EmberParticle` | `#FFB254` | n/a | 1 | ember particles |
 | `M_FX_Moonbeam` | `#A8BDF2` | n/a | 1 | the reflected moonlight beam in Puzzle 3 (URP Particles/Unlit, like the embers) |
+| `M_FX_Smoke` | `#8F828A`, alpha 0.55 | n/a | 1 | the wisp of smoke when the Puzzle 1 candle is put out (transparent URP Particles/Unlit) |
+| `M_FX_ComfortVignette` | edge `#191619` | n/a | 1 | the `Mansion/ComfortVignette` shader: soft field-of-view ring while moving with the thumbstick or arm-swing |
 | `M_FX_MirrorWhisper` | glyphs `#6E1E22` · `#4A5560` · `#2E4A36` | n/a | 1 | the `Mansion/MirrorWhisper` shader: book-order clue that fades in on the haunted mirror when you lean close |
 
 **Colour rules**

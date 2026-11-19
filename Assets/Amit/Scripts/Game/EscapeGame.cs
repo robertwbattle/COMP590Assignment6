@@ -52,6 +52,7 @@ namespace MansionGame
         {
             Instance = this;
             BestTime = PlayerPrefs.GetFloat(BestTimeKey, -1f);
+            LoadTopTimes();
             if (puzzle1 == null) puzzle1 = FindAnyObjectByType<Puzzle1_1>();
         }
 
@@ -71,9 +72,38 @@ namespace MansionGame
             PuzzleSolved?.Invoke(puzzle);
         }
 
+        /// <summary>Fastest escapes on this device, best first (up to LeaderboardSize).</summary>
+        public System.Collections.Generic.IReadOnlyList<float> TopTimes => topTimes;
+        /// <summary>Position (0-based) of the latest win in TopTimes, or -1 if it didn't place.</summary>
+        public int LastRank { get; private set; } = -1;
+        public const int LeaderboardSize = 5;
+        const string TopTimesKey = "MansionTopTimes";
+        readonly System.Collections.Generic.List<float> topTimes = new System.Collections.Generic.List<float>();
+
+        void LoadTopTimes()
+        {
+            topTimes.Clear();
+            foreach (var part in PlayerPrefs.GetString(TopTimesKey, "").Split(';'))
+                if (float.TryParse(part, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var t) && t > 0f)
+                    topTimes.Add(t);
+            topTimes.Sort();
+        }
+
+        void RecordTopTime(float t)
+        {
+            topTimes.Add(t);
+            topTimes.Sort();
+            while (topTimes.Count > LeaderboardSize) topTimes.RemoveAt(topTimes.Count - 1);
+            LastRank = topTimes.IndexOf(t);
+            var parts = new string[topTimes.Count];
+            for (int i = 0; i < parts.Length; i++) parts[i] = topTimes[i].ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
+            PlayerPrefs.SetString(TopTimesKey, string.Join(";", parts));
+        }
+
         public void Win()
         {
             if (State != GameState.Playing) return;
+            RecordTopTime(Elapsed);
             NewBest = false;
             if (BestTime < 0f || Elapsed < BestTime)
             {

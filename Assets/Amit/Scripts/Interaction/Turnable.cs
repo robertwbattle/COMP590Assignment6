@@ -19,6 +19,8 @@ namespace MansionGame
         private float minYawOffset = -90f;
         [SerializeField, Tooltip("Highest yaw offset (degrees) from the authored yaw, when clampRange is on.")]
         private float maxYawOffset = 90f;
+        [SerializeField, Range(0.1f, 2f), Tooltip("Pseudo-haptic weight (Lecuyer et al. 2000): object degrees per hand degree. Below 1 makes it feel heavy.")]
+        private float controlDisplayRatio = 1f;
         [SerializeField, Tooltip("Whether a hand may turn it.")]
         private bool canTurn = true;
 
@@ -83,8 +85,10 @@ namespace MansionGame
                     lastHandForward = fwd;
                 return;
             }
-            accumulated += Vector3.SignedAngle(lastHandForward, fwd, Vector3.up);
+            accumulated += Vector3.SignedAngle(lastHandForward, fwd, Vector3.up) * controlDisplayRatio;
             lastHandForward = fwd;
+            if (clampRange)
+                accumulated = Mathf.Clamp(accumulated, minYawOffset - offsetAtBegin, maxYawOffset - offsetAtBegin);
             ApplyOffset(offsetAtBegin + accumulated, true, turningController);
         }
 
