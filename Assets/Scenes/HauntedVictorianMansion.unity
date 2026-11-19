@@ -18555,6 +18555,7 @@ GameObject:
   - component: {fileID: 311104003}
   - component: {fileID: 311104005}
   - component: {fileID: 311104004}
+  - component: {fileID: 311104006}
   m_Layer: 0
   m_Name: Mirror Whisper Clue
   m_TagString: Untagged
@@ -18634,6 +18635,23 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 311104002}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &311104006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 311104002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1222e05c80a547f7a3f44194dfba671, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MansionGame.ClueHint
+  clue: {fileID: 311104004}
+  library: {fileID: 246189410}
+  firstHintDelay: 75
+  repeatEvery: 60
+  flashSeconds: 4
 --- !u!1 &311491653
 GameObject:
   m_ObjectHideFlags: 0
@@ -85962,6 +85980,7 @@ GameObject:
   - component: {fileID: 1771011614}
   - component: {fileID: 1771011613}
   - component: {fileID: 1771011619}
+  - component: {fileID: 1771011620}
   m_Layer: 0
   m_Name: Escape Game
   m_TagString: Untagged
@@ -86196,6 +86215,20 @@ MonoBehaviour:
   maxStrength: 0.75
   closeRate: 4
   openRate: 2
+--- !u!114 &1771011620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1771011611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5defbe39cfe0142ca80505da87a01e76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MansionGame.PlayerSafety
+  startPoint: {fileID: 1350657876}
+  fallLimitY: -2.5
 --- !u!1 &1772017246
 GameObject:
   m_ObjectHideFlags: 0
