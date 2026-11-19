@@ -45,7 +45,7 @@ This works on macOS and Windows without a headset.
 <details>
 <summary>Spoilers: full solution</summary>
 
-**Puzzle 1, the candle.** Put out the lit candle on the coffee table. The parlour bookcase sinks into the floor and opens a hidden room.
+**Puzzle 1, the candle.** Every few seconds the candle on the coffee table gutters and flickers a ghostly teal. Put it out (point at it and pull the trigger). The parlour bookcase sinks into the floor and opens a hidden room.
 
 **Puzzle 2, the library.**
 
@@ -73,7 +73,7 @@ This works on macOS and Windows without a headset.
 | Theme | Haunted Victorian mansion, built entirely from primitives with a shared material and lighting style guide (`STYLE_GUIDE.md`). |
 | Custom shaders | `Mansion/Haunted Mirror` (a procedural ghost in the fireplace mirror) and `Mansion/MirrorWhisper` (a clue that fades in with the viewer's distance, worked out in the shader). |
 | Particle system | Rising Embers in the fireplace. |
-| Three puzzles | See the walkthrough. The puzzles use grabbing, placing objects in sockets, turning in steps, and a moonbeam that reflects off mirrors using raycasts. |
+| Three puzzles | See the walkthrough. They must be solved in order to escape, and `EscapeGame.PuzzlesSolved` counts them (shown as "seals n/3"). The puzzles use grabbing, placing objects in sockets, turning in steps, and a moonbeam that reflects off mirrors using raycasts. |
 | Game | Win (escape) and lose (candle timer). Also a best-time record and a pocket-watch readout on the left hand showing time left and seals broken. |
 | Movement | Continuous thumbstick locomotion with snap turn (OVRPlayerController). The body capsule follows the headset for room-scale walking. |
 | Senses beyond visuals | Spatial 3D sound: ambience, candle snuff, bookcase grind, book thuds, mirror clicks, lock and bars, heartbeat, whispers, and win and lose stings. Controller haptics: grab, snap, mirror clicks, wrong-order buzz, window-bars rumble, win/lose pulses, and heartbeat. |
@@ -106,7 +106,7 @@ This works on macOS and Windows without a headset.
 
 - The style guide forbids colliders on props. The puzzle props are the exception, so they can be grabbed.
 - Audio clips are CC0 or self-made (Python-synthesised). See the outside resources below.
-- The project has no imported meshes or textures. Everything is built from primitives and project materials.
+- The project has no imported meshes or textures. Every object (furniture, fireplace, portraits, chandeliers, cheval mirrors, library cabinet, candles) was built by the team from Unity primitives with our own materials, emissive glows and two custom shaders, instead of downloading asset-store models.
 
 ## Outside resources
 
