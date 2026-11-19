@@ -63,7 +63,7 @@ This works on macOS and Windows without a headset.
 
 **Escape.** Walk out of the front door, across the porch and down the garden path toward the open gate. Once you are out in the garden you win, and the win screen shows your time and the top-5 leaderboard.
 
-**Losing.** If the mantel candle burns out, you lose. The limit is 8 minutes by default (`timeLimit` on the Escape Game object). As time runs low, the lights dim, you hear whispers and a heartbeat, and the controllers pulse to match.
+**Losing.** If the mantel candle burns out, you lose. The limit is 12 minutes by default (`timeLimit` on the Escape Game object). As time runs low, the lights dim, you hear whispers and a heartbeat, and the controllers pulse to match.
 
 </details>
 

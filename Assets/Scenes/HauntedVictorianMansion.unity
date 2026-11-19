@@ -86174,7 +86174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 235bea1265eb34636910cb9075b1bcf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MansionGame.EscapeGame
-  timeLimit: 480
+  timeLimit: 720
   introSeconds: 6
   puzzle1: {fileID: 0}
   debugKeys: 1
