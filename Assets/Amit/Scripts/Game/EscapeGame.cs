@@ -19,7 +19,7 @@ namespace MansionGame
         const float RestartDelay = 2.5f;
 
         [Tooltip("Seconds on the clock once the intro ends.")]
-        [SerializeField] private float timeLimit = 480f;
+        [SerializeField] private float timeLimit = 720f;
         [Tooltip("Seconds of intro before the timer starts.")]
         [SerializeField] private float introSeconds = 6f;
         [Tooltip("Puzzle 1 (the candle). Found automatically if empty.")]

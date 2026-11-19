@@ -43,7 +43,7 @@ namespace MansionGame
             g.StateChanged += OnState;
             g.PuzzleSolved += OnSolved;
             if (g.State == GameState.Intro)
-                Show("The Ashcombe Parlour", "The candle on the mantel is all the time you have.\nFind the way out before it dies.", g.IntroSeconds);
+                Show("The Ashcombe Parlour", "The front door behind you is barred, and the candle on the mantel\nis all the time you have. Find the way out before it dies.", g.IntroSeconds);
         }
 
         void OnDestroy()
@@ -87,7 +87,7 @@ namespace MansionGame
                 for (int i = 0; i < top.Count; i++)
                     board.Append(i + 1).Append(".  ").Append(EscapeGame.FormatTime(top[i]))
                          .Append(i == g.LastRank ? "   ← you" : "").Append('\n');
-                Show("You escaped", t + board + "\nPull a trigger to play again.", 0f);
+                Show("You escaped", "The night air is cold. The house is behind you.\n" + t + board + "\nPull a trigger to play again.", 0f);
             }
             else if (s == GameState.Lost)
             {
@@ -107,12 +107,12 @@ namespace MansionGame
             string line;
             switch (n)
             {
-                case 1: line = "Something shifts behind the bookcase."; break;
-                case 2: line = "A cupboard creaks open in the hidden room."; break;
-                case 3: line = "The moonlight burns through the lock. The window bars are opening."; break;
+                case 1: line = "Something grinds open behind the bookcase on the west wall."; break;
+                case 2: line = "The cabinet in the hidden room swings open.\nInside lies a loose mirror pane, and one of the parlour's\nstanding mirrors is missing its glass."; break;
+                case 3: line = "The moonlight breaks the seal.\nBehind you, the bars on the front door crash to the floor."; break;
                 default: line = ""; break;
             }
-            Show("A seal breaks… (" + n + "/" + EscapeGame.PuzzleCount + ")", line, 4.5f);
+            Show("A seal breaks… (" + n + "/" + EscapeGame.PuzzleCount + ")", line, n == 1 ? 5f : 8f);
         }
 
         void Build()
