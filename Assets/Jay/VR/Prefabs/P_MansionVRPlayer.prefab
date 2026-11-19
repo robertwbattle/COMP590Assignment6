@@ -278,7 +278,7 @@ MonoBehaviour:
   JumpForce: 0
   RotationAmount: 1.5
   RotationRatchet: 30
-  SnapRotation: 1
+  SnapRotation: 0
   RotateAroundGuardianCenter: 0
   FixedSpeedSteps: 0
   HmdResetsY: 1
