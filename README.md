@@ -11,7 +11,7 @@ COMP 590 Assignment 6. A VR escape room for Meta Quest, built in Unity.
 
 ## Overview
 
-You are shut in the Ashcombe parlour. A tall candle on the mantel is the timer. Solve three puzzles, then escape through the moonlit window before the candle burns out.
+You are shut in the Ashcombe parlour and the front door is barred. A tall candle on the mantel is the timer. Solve three puzzles to break the house's hold, then walk out of the front door into the moonlit garden before the candle burns out.
 
 ## Running in the Unity Editor with the Meta XR Simulator
 
@@ -52,16 +52,16 @@ This works on macOS and Windows without a headset.
 
 - Three loose books (red, slate-grey, green) are spread through both rooms.
 - Lean close to the haunted mirror above the fireplace. Three book shapes fade into the glass, showing the order: red, slate, green.
-- Shelve the books in that order in the three slots of the cabinet in the hidden room.
-- A wrong order rattles a lock and buzzes the controllers. The right order opens the cabinet doors and shows a silvered mirror pane.
+- Shelve the books in that order in the three slots of the cabinet in the hidden room. (The cabinet is against the far wall of the hidden room.)
+- A wrong order rattles a lock and buzzes the controllers. The right order opens the cabinet doors and shows a loose mirror pane. A message points out that one of the parlour's standing mirrors is missing its glass.
 
 **Puzzle 3, the moonlight.**
 
 - Moonlight shines through the first window onto a fixed mirror. That mirror bounces it onto a second mirror, which faces the wrong way.
 - Turn the second mirror. Put the pane into the third (empty) mirror frame and turn that mirror too, so the beam lands on the moon seal on the other window's bars.
-- After a second of moonlight, the seal breaks and the bars swing open.
+- After a second of moonlight, the seal breaks. Behind you, the iron bars on the front door crash to the floor and the door swings open.
 
-**Escape.** Reach your hand out through the open window to win. The win screen shows your time and your best time.
+**Escape.** Walk out of the front door, across the porch and down the garden path toward the open gate. Once you are out in the garden you win, and the win screen shows your time and the top-5 leaderboard.
 
 **Losing.** If the mantel candle burns out, you lose. The limit is 8 minutes by default (`timeLimit` on the Escape Game object). As time runs low, the lights dim, you hear whispers and a heartbeat, and the controllers pulse to match.
 
@@ -71,13 +71,13 @@ This works on macOS and Windows without a headset.
 
 | Requirement | How it is met |
 |---|---|
-| Theme | Haunted Victorian mansion, built entirely from primitives with a shared material and lighting style guide (`STYLE_GUIDE.md`). |
+| Theme | Haunted Victorian mansion: a parlour, an entry hall with a barred front door, a hidden library, and a moonlit front garden with an iron gate, dead trees and headstones. Everything is built entirely from primitives with a shared material and lighting style guide (`STYLE_GUIDE.md`). |
 | Custom shaders | Three: `Mansion/Haunted Mirror` (a procedural ghost in the fireplace mirror), `Mansion/MirrorWhisper` (a clue that fades in with the viewer's distance, worked out in the shader), and `Mansion/ComfortVignette` (a per-eye field-of-view ring used while moving). |
 | Particle systems | Three: rising embers in the fireplace, a wisp of smoke when you snuff the Puzzle 1 candle, and dust drifting in the moonbeam. |
 | Three puzzles | See the walkthrough. They must be solved in order to escape, and `EscapeGame.PuzzlesSolved` counts them (shown as "seals n/3"). The puzzles use grabbing, placing objects in sockets, turning in steps, and a moonbeam that reflects off mirrors using raycasts. |
 | Game | Win (escape) and lose (candle timer). Also a top-5 fastest-escapes leaderboard on the win screen (saved on the device) and a pocket-watch readout on the left hand showing time left and seals broken. |
 | Movement | Three ways to move: room-scale walking (the body capsule follows the headset), thumbstick locomotion with snap turn, and arm-swing walking (after McCullough et al. 2015). A comfort vignette narrows the view only during artificial movement and snap turns (after Fernandes & Feiner 2016). |
-| Senses beyond visuals | Spatial 3D sound: ambience, candle snuff, bookcase grind, book thuds, mirror clicks, lock and bars, heartbeat, whispers, and win and lose stings. Controller haptics: grab, snap, mirror clicks, wrong-order buzz, window-bars rumble, win/lose pulses, and heartbeat. Two pseudo-haptic weight illusions (see below). |
+| Senses beyond visuals | Spatial 3D sound: ambience, candle snuff, bookcase grind, book thuds, mirror clicks, lock and bars, heartbeat, whispers, and win and lose stings. Controller haptics: grab, snap, mirror clicks, wrong-order buzz, door-unlocking rumble, win/lose pulses, and heartbeat. Two pseudo-haptic weight illusions (see below). |
 
 
 ## Illusions and the papers behind them
